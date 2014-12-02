@@ -1,8 +1,11 @@
 #cloaked-octo-tyrion
-it's like telnet but it proxies through a hardcoded SOCKS proxy of
-localhost:1080
+it's like telnet/netcat but it proxies through a SOCKS proxy
 
-##coming soon
-* non-hardcodedness
+##usage
+```
+go run socks.go <host> <port> [proxyhost [proxyport]]
+```
+
+_proxyhost_ defaults to localhost, and _proxyport_ defaults to 1080.
 
 

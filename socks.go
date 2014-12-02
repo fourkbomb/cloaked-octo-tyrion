@@ -18,7 +18,6 @@ func genRequest(dns string, port uint16) []byte {
 	b := make([]byte, 2)
 	binary.BigEndian.PutUint16(b, port)
 	res = append(res, bts...)
-	fmt.Sprintln("%x", res)
 	return append(res, b...) // TODO ports other than 80
 }
 
@@ -31,11 +30,20 @@ func sendStuff(conn net.Conn) {
 }
 
 func main() {
-	conn, err := net.Dial("tcp", "localhost:1080")
 	if len(os.Args) < 3 {
-		println("Usage: " + os.Args[0] + " <domain name> <port>")
+		println("Usage: " + os.Args[0] + " <domain name> <port> [proxyhost [proxyport]]")
+		println("Proxy host defaults to localhost, and proxy port defaults to 1080")
 		os.Exit(1)
 	}
+	host := "localhost"
+	portnum := "1080"
+	if len(os.Args) >= 4 {
+		host = os.Args[3]
+		if (len(os.Args) >= 5) {
+			portnum = os.Args[4]
+		}
+	}
+	conn, err := net.Dial("tcp", host + ":" + portnum)
 	if err != nil {
 		fmt.Println("Damn")
 		fmt.Println(err)
